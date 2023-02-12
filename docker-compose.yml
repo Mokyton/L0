@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "mokydb"
+      POSTGRES_USER: "mokyuser"
+      POSTGRES_PASSWORD: "pwd4moky"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - .:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
