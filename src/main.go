@@ -1,11 +1,15 @@
 package main
 
 import (
+	"L0/db"
+	"flag"
+	_ "github.com/lib/pq"
 	"github.com/nats-io/nats.go"
 	"log"
 	"time"
-	//"time"
 )
+
+var conn = flag.String("conn", "postgres://mokyuser:pwd4moky@localhost/mokydb?sslmode=disable", "database connection string")
 
 func main() {
 	nc, err := nats.Connect(nats.DefaultURL)
@@ -25,7 +29,18 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	msg.Respond([]byte("Check"))
+	msg.Respond([]byte("Krasivo"))
+	run(msg.Data)
 
-	log.Printf("Reply: %s", string(msg.Data))
+}
+
+func run(d []byte) error {
+	dbh, err := db.Connect(conn)
+	if err != nil {
+		return err
+	}
+	defer dbh.Close()
+	_ = dbh.InitTable()
+	_ = dbh.Insert(d)
+	return nil
 }
