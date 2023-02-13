@@ -3,7 +3,6 @@ package main
 import (
 	"L0/db"
 	"flag"
-	"fmt"
 	_ "github.com/lib/pq"
 	"github.com/nats-io/stan.go"
 	"log"
@@ -19,31 +18,21 @@ func main() {
 		log.Fatal(err)
 	}
 	defer nc.Close()
-	nc.Subscribe("test-sub", func(m *stan.Msg) {
-		fmt.Printf("Got: %s\n", string(m.Data))
-	})
 
-	http.ListenAndServe(":8888", nil)
-	//msg.Respond([]byte("Krasivo"))
-	//dbh, err := db.Connect(conn)
-	//if err != nil {
-	//	return
-	//}
-	//defer dbh.Close()
-	//run(msg.Data)
-	//http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	//	w.Write(dbh.Get())
-	//})
-	//http.ListenAndServe(":8888", nil)
-}
-
-func run(d []byte) error {
 	dbh, err := db.Connect(conn)
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
 	defer dbh.Close()
-	_ = dbh.InitTable()
-	_ = dbh.Insert(d)
-	return nil
+
+	err = dbh.InitTable()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	nc.Subscribe("test-sub", func(m *stan.Msg) {
+		dbh.Insert(m.Data)
+	}, stan.StartWithLastReceived())
+
+	http.ListenAndServe(":8888", nil)
 }
