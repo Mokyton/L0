@@ -1,6 +1,7 @@
 package db
 
 import (
+	"bytes"
 	"context"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/stdlib"
@@ -8,8 +9,7 @@ import (
 )
 
 var initScript = `
-	DROP TABLE IF EXISTS orders;
-	CREATE TABLE orders (
+	CREATE TABLE IF NOT EXISTS orders (
 		id BIGSERIAL PRIMARY KEY,
 		order_info json
 	);
@@ -57,4 +57,9 @@ func (m *model) InitTable() error {
 		return err
 	}
 	return nil
+}
+func (m *model) Get() []byte {
+	var buf bytes.Buffer
+	_ = m.db.Select(&buf, `SELECT order_info FROM orders`)
+	return buf.Bytes()
 }
