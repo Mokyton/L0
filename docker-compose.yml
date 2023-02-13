@@ -12,7 +12,13 @@ services:
       - .:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  nats:
-    image: nats:latest
+  nats-streaming:
+    command:
+      - "--cid"
+      - test
+      - "--dir"
+      - store
+    image: nats-streaming:latest
     ports:
       - "4222:4222"
+      - "8223:8223"
