@@ -12,7 +12,7 @@
     "email": "test@gmail.com"
   },
   "payment": {
-    "transaction": "b563feb7b2b84b6test",
+    "transaction": "b563feb7b2b84b6tset",
     "request_id": "",
     "currency": "RUB",
     "provider": "wbpay",
