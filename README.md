@@ -1,5 +1,5 @@
-#Wildberries
-###Golang internship L0
+Wildberries
+Golang internship L0
 
 PREPARATION
 ------------
