@@ -53,7 +53,7 @@ func (m *model) Close() error {
 	return nil
 }
 
-func (m *model) InitTable() error {
+func (m *model) InitTable() error { // Понимаю, что так делать не надо, но в качестве учебного преокта сделал, чтобы любой мог сразу запустить.
 	_, err := m.db.ExecContext(context.Background(), initScript)
 	if err != nil {
 		return err
