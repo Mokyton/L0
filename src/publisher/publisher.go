@@ -9,14 +9,14 @@ import (
 )
 
 func main() {
-	path := flag.String("path", "./data-sets", "path to data-sets dir")
+	path := flag.String("path", "./publisher/data-sets", "path to data-sets dir")
 	flag.Parse()
 	nc, err := stan.Connect("test", "test-publisher")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer nc.Close()
-	files, err := ioutil.ReadDir("./data-sets")
+	files, err := ioutil.ReadDir(*path)
 	if err != nil {
 		log.Fatal(err)
 	}

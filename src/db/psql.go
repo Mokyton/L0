@@ -1,7 +1,6 @@
 package db
 
 import (
-	"bytes"
 	"context"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/stdlib"
@@ -10,8 +9,8 @@ import (
 
 var initScript = `
 	CREATE TABLE IF NOT EXISTS orders (
-		id BIGSERIAL PRIMARY KEY,
-		order_info json
+		id text PRIMARY KEY,
+		order_info jsonb
 	);
 `
 
@@ -38,8 +37,11 @@ func Connect(conn *string) (*model, error) {
 	return &model{db: dbh}, nil
 }
 
-func (m *model) Insert(src []byte) error {
-	m.db.Exec(`INSERT INTO orders (order_info) VALUES ($1)`, src)
+func (m *model) Insert(uuid string, src []byte) error {
+	_, err := m.db.Exec(`INSERT INTO orders (id, order_info) VALUES ($1, $2)`, uuid, src)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -51,15 +53,23 @@ func (m *model) Close() error {
 	return nil
 }
 
-func (m *model) InitTable() error {
+func (m *model) InitTable() error { // Понимаю, что так делать не надо, но в качестве учебного преокта сделал, чтобы любой мог сразу запустить.
 	_, err := m.db.ExecContext(context.Background(), initScript)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-func (m *model) Get() []byte {
-	var buf bytes.Buffer
-	_ = m.db.Select(&buf, `SELECT order_info FROM orders`)
-	return buf.Bytes()
+
+func (m *model) Get() map[string][]byte {
+	var buf []struct {
+		Uid  string `db:"id"`
+		Json []byte `db:"order_info"`
+	}
+	_ = m.db.Select(&buf, `SELECT id, order_info FROM orders`)
+	cache := make(map[string][]byte)
+	for _, v := range buf {
+		cache[v.Uid] = v.Json
+	}
+	return cache
 }

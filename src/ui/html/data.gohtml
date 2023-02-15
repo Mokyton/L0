@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>L0</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+<div>
+        <h1>Order</h1>
+        <ul>
+            <li>UID: {{.OrderUID}}</li>
+            <li>Track number: {{.TrackNumber}}</li>
+            <li>Entry: {{.Entry}}</li>
+            <li>
+                Delivery:
+                <ul>
+                    <li>Name: {{.Delivery.Name}}</li>
+                    <li>Phone: {{.Delivery.Phone}}</li>
+                    <li>Zip: {{.Delivery.Zip}}</li>
+                    <li>City: {{.Delivery.City}}</li>
+                    <li>Address: {{.Delivery.Address}}</li>
+                    <li>Region: {{.Delivery.Region}}</li>
+                    <li>Email: {{.Delivery.Email}}</li>
+                </ul>
+            </li>
+            <li>
+                Payment:
+                <ul>
+                    <li>Transaction: {{.Payment.Transaction}}</li>
+                    <li>Request ID: {{.Payment.RequestID}}</li>
+                    <li>Currency: {{.Payment.Currency}}</li>
+                    <li>Provider: {{.Payment.Provider}}</li>
+                    <li>Amount: {{.Payment.Amount}}</li>
+                    <li>PaymentDt: {{.Payment.PaymentDt}}</li>
+                    <li>Bank: {{.Payment.Bank}}</li>
+                    <li>Delivery Cost: {{.Payment.DeliveryCost}}</li>
+                    <li>Goods Total: {{.Payment.GoodsTotal}}</li>
+                    <li>Custom Fee: {{.Payment.CustomFee}}</li>
+                </ul>
+            </li>
+            <li>
+                Items:
+                {{range .Items}}
+                        <ul>
+                            <li>
+                                Name: {{.Name}}
+                                <ul>
+                                    <li>Chrt ID: {{.ChrtID}}</li>
+                                    <li>Track Number: {{.TrackNumber}}</li>
+                                    <li>Price: {{.Price}}</li>
+                                    <li>Rid: {{.Rid}}</li>
+
+                                    <li>Sale: {{.Sale}}</li>
+                                    <li>Size: {{.Size}}</li>
+                                    <li>Total Price: {{.TotalPrice}}</li>
+                                    <li>Nm ID: {{.NmID}}</li>
+                                    <li>Brand: {{.Brand}}</li>
+                                    <li>Status: {{.Status}}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    {{end}}
+            </li>
+            <li>Locale: {{.Locale}}</li>
+            <li>Internal signature: {{.InternalSignature}}</li>
+            <li>Customer ID: {{.CustomerID}}</li>
+            <li>Delivery service: {{.DeliveryService}}</li>
+            <li>Shardkey: {{.Shardkey}}</li>
+            <li>SM ID: {{.SmID}}</li>
+            <li>Date created: {{.DateCreated}}</li>
+            <li>Off shard: {{.OofShard}}</li>
+        </ul>
+</div>
+<div>
+    <a href="/"><h3><-Back</h3></a>
+</div>
+
+
+</body>
+</html>

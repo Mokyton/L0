@@ -1,5 +1,5 @@
 {
-  "order_uid": "b563feb7b2b84b6tset",
+  "order_uid": "b563feb7b2b84b6newtest",
   "track_number": "WBILMTESTTRACK",
   "entry": "WBIL",
   "delivery": {
@@ -12,7 +12,7 @@
     "email": "test@gmail.com"
   },
   "payment": {
-    "transaction": "b563feb7b2b84b6test",
+    "transaction": "b563feb7b2b84b6newtest",
     "request_id": "",
     "currency": "RUB",
     "provider": "wbpay",
@@ -35,6 +35,19 @@
       "total_price": 317,
       "nm_id": 2389212,
       "brand": "Vivienne Sabo",
+      "status": 202
+    },
+    {
+      "chrt_id": 9934486,
+      "track_number": "TEST",
+      "price": 780,
+      "rid": "rpprprprprprprp",
+      "name": "Duxless",
+      "sale": 10,
+      "size": "15",
+      "total_price": 258,
+      "nm_id": 2389212,
+      "brand": "Bugatti",
       "status": 202
     }
   ],
